@@ -2,38 +2,38 @@ import { useState } from "react";
 
 export default function Login() {
 
- const [email, setEmail] = useState('');
- const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
 
- const handleSubmit = async (e) => {
-    e.preventDefault();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        
+        try {
+            const response = await fetch('https://api.aniyuu.com/user/login', {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log("Başarılı giriş", data);
+                
+            } else {
+                console.error("Giriş başarısız", response.statusText);
+            }  
+        } 
+        catch (error) {
+            console.log("Hata oluştu", error);
+        }
     
-    try {
-        const response = await fetch('https://api.aniyuu.com/user/login', {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                email: email,
-                password: password
-            })
-        });
-
-        if (response.ok) {
-            const data = await response.json();
-            console.log("Başarılı giriş", data);
-            
-        } else {
-            console.error("Giriş başarısız", response.statusText);
-        }  
     } 
-    catch (error) {
-        console.log("Hata oluştu", error);
-    }
-    
-} 
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen text-white"> 

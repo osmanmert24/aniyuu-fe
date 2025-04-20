@@ -7,8 +7,6 @@ export default function Register () {
     const [fullname, setFullname] = useState('');
     const [username, setUsername] = useState('');
     
-    
-
     const handleSubmit =  async(e) => {
         e.preventDefault();
         try {
