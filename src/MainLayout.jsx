@@ -3,10 +3,14 @@ import Navbar from "./Navbar";
 
 export default function MainLayout () {
     return(
-        <>
-            <Navbar/>
+            <div className=""> 
+        
+           
+
             <Outlet/>
-        </>
-    )
+        
+           
+            </div>
+        )
             
 }
