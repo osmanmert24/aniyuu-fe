@@ -1,52 +1,63 @@
-export default function Login() {
+import { useState } from "react";
+import { useAuth } from "./hooks/useAuth";
 
-
-
-
-
+const Login = () => {
+    const { login } = useAuth();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState(null);
     
+    const handleSubmit = async e => {
+        e.preventDefault();
+
+        try {
+            await login(email, password);
+            window.location.href = '/';
+        } catch(err) {
+            setError(`Giriş başarısız: ${err.message || 'Bilinmeyen bir hata oluştu.'}`);
+            console.error(`Giriş başarısız: ${err.message || 'Bilinmeyen bir hata oluştu.'}`);
+        }
+    }
+
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100">
-            <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
-                <h2 className="text-2xl font-bold text-center text-gray-800">Giriş Yap</h2>
-                <form className="space-y-4">
-                    <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                            E-posta
-                        </label>
-                        <input
+        <div className="flex flex-col items-center justify-center min-h-screen text-white"> 
+            <div className="border-bg px-44 py-64 rounded-lg ">
+                <h2 className="text-center  font-bold text-gray-100">Giriş Yap</h2>
+                <form onSubmit={handleSubmit} className="space-y-4 flex flex-col">
+
+                    <div className="flex gap-1 flex-col w-96">
+                        <label className="px-2 py-1" htmlFor="email">E-posta</label>
+                        <input 
                             type="email"
-                            id="email"
-                            className="w-full px-4 py-2 mt-1 text-gray-900 bg-gray-100 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                            id="email" 
                             placeholder="E-posta adresinizi girin"
-                            required
+                            className="px-2 py-1"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                         />
                     </div>
-                    <div>
-                        <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                            Şifre
-                        </label>
-                        <input
-                            type="password"
-                            id="password"
-                            className="w-full px-4 py-2 mt-1 text-gray-900 bg-gray-100 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
-                            placeholder="Şifrenizi girin"
-                            required
+                    
+                    <div className="flex flex-col w-96 gap-1">
+                        <label className="px-2 py-1" htmlFor="password">Şifre</label>
+                        <input 
+                            type="password"  
+                            id="password" 
+                            placeholder="Şifrenizi girin" 
+                            className="px-2 py-1"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
-                    <div className="flex items-center justify-between">
-                        <a href="#" className="text-sm text-blue-600 hover:underline">
-                            Şifremi Unuttum
-                        </a>
-                    </div>
-                    <button
+
+                    <button 
                         type="submit"
-                        className="w-full px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:ring-blue-300"
-                    >
-                        Giriş Yap
+                        className="text-center text-md px-8 py-2 mx-auto  hover:opacity-50  mt-5 rounded-lg  secondary-color">
+                            Giriş yap!
                     </button>
                 </form>
             </div>
         </div>
     );
 }
+
+export default Login;

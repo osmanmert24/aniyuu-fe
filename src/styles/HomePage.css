@@ -1,0 +1,7 @@
+.homepage-bg {
+
+    background-image: url("../assets/bg/background1.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 0;
+}

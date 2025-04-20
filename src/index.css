@@ -1,1 +1,40 @@
 @import "tailwindcss";
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color:  #0f0f1a;
+    color: white;
+    font-size: 16px;
+    line-height: 1.5;
+}
+  
+h1, h2, h3, h4, h5, h6 , nav {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+}
+:root {
+    --primary-color: #FF13F0;
+    --secondary-color: #d504c7;
+    --shadows-300: rgba(255, 19, 240, 0.3);
+    --shadows-900: rgba(0, 0, 0, 0.3);
+    --bg-color-900: rgb(18, 18, 18);
+    
+}
+.secondary-color {
+    background-color: var(--primary-color) ;
+    filter: drop-shadow(0 0 8px rgba(255, 19, 240, 0.5));
+}
+
+
+.border-bg {
+
+    background-color: var(--shadows-900);
+}
+
+.logo-bg {
+
+    filter: drop-shadow(0 0 8px rgba(255, 19, 240, 0.5));
+   
+
+}
+
