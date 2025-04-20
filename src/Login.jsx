@@ -1,39 +1,23 @@
 import { useState } from "react";
+import { useAuth } from "./hooks/useAuth";
 
-export default function Login() {
-
+const Login = () => {
+    const { login } = useAuth();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        
-        try {
-            const response = await fetch('https://api.aniyuu.com/user/login', {
-                method: 'POST',
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    email: email,
-                    password: password
-                })
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                console.log("Başarılı giriş", data);
-                
-            } else {
-                console.error("Giriş başarısız", response.statusText);
-            }  
-        } 
-        catch (error) {
-            console.log("Hata oluştu", error);
-        }
+    const [error, setError] = useState(null);
     
-    } 
+    const handleSubmit = async e => {
+        e.preventDefault();
+
+        try {
+            await login(email, password);
+            window.location.href = '/';
+        } catch(err) {
+            setError(`Giriş başarısız: ${err.message || 'Bilinmeyen bir hata oluştu.'}`);
+            console.error(`Giriş başarısız: ${err.message || 'Bilinmeyen bir hata oluştu.'}`);
+        }
+    }
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen text-white"> 
@@ -75,3 +59,5 @@ export default function Login() {
         </div>
     );
 }
+
+export default Login;

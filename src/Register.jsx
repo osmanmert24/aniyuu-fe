@@ -1,40 +1,28 @@
-import { useState } from "react";
-
+import { use, useState } from "react";
+import { useAuth } from "./hooks/useAuth";
 
 export default function Register () {
+    const { register } = useAuth();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [fullname, setFullname] = useState('');
     const [username, setUsername] = useState('');
+    const [error, setError] = useState(null);
+    const [confirm, setConfirm] = useState('');
     
     const handleSubmit =  async(e) => {
         e.preventDefault();
-        try {
-            
-            const response = await fetch("https://api.aniyuu.com/user/register", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    email: email,
-                    hashedPassword: password,
-                    fullname: fullname,
-                    username: username
-                })
-            });
-            if (response.ok) {
-                const data = await response.json();
-                console.log("Kayıt başarılı!", data);
-            } else {
-                console.error("Kayıt başarısız!", response.statusText);
-            }
-            
-        } catch(error) {
-            
-                console.error("Kayıt başarısız!", error)
+        if (password !== confirm) {
+            setError('Şifreler eşleşmiyor');
+            return;
         }
-    } 
+        try {
+            await register(fullname, username, email, password);
+            window.location.href = '/';
+        } catch(err) {
+            setError('Kayıt başarısız: '+ err.response?.data?.message || err.message);
+        }
+    };
 
     return (
 
@@ -90,6 +78,17 @@ export default function Register () {
                         className="px-2 py-1"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                    />
+                </div>
+                <div className="flex flex-col w-96 gap-1">
+                    <label className="px-2 py-1" htmlFor="confirm-password">Şifre</label>
+                    <input 
+                        type="password"  
+                        id="confirm-password" 
+                        placeholder="Şifrenizi girin(tekrar)" 
+                        className="px-2 py-1"
+                        value={confirm}
+                        onChange={(e) => setConfirm(e.target.value)}
                     />
                 </div>
 
