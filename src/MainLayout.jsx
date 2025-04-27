@@ -6,7 +6,7 @@ export default function MainLayout () {
             <div className=""> 
         
            
-
+            
             <Outlet/>
         
            

@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "./hooks/useAuth";
+import { div } from "framer-motion/client";
+import { Logo } from "./components/Logo";
 
 const Login = () => {
     const { login } = useAuth();
@@ -20,9 +22,13 @@ const Login = () => {
     }
 
     return (
+        <div className="bg-[url(./assets/bg/background.png)] bg-black/75 bg-blend-multiply bg-cover bg-center  ">
         <div className="flex flex-col items-center justify-center min-h-screen text-white"> 
-            <div className="border-bg px-44 py-64 rounded-lg ">
-                <h2 className="text-center  font-bold text-gray-100">Giriş Yap</h2>
+         
+            <div className="bg-black/50 px-16 flex flex-col items-center gap-5 py-36 rounded-lg   ">
+                <div className="relative -top-32">
+                <Logo/>
+                </div>
                 <form onSubmit={handleSubmit} className="space-y-4 flex flex-col">
 
                     <div className="flex gap-1 flex-col w-96">
@@ -56,6 +62,7 @@ const Login = () => {
                     </button>
                 </form>
             </div>
+        </div>
         </div>
     );
 }
