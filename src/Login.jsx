@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useAuth } from "./hooks/useAuth";
-import { div } from "framer-motion/client";
 import { Logo } from "./components/Logo";
 
 const Login = () => {
