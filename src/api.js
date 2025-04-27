@@ -31,7 +31,6 @@ api.interceptors.request.use(async config => {
             try {
                 accessToken = await refreshAccessToken();
             } catch(err) {
-                //yenileme başarısızsa yani refresh token expired ise
                 cookies.remove('accessToken');
                 cookies.remove('refreshToken');
                 window.location.href = '/login';
