@@ -2,7 +2,6 @@ import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import dayjs from "dayjs";
 import { Cookies } from "react-cookie";
-import { configs } from "eslint-plugin-react-refresh";
 
 const cookies = new Cookies();
 const baseURL = 'https://api.aniyuu.com';
