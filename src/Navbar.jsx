@@ -8,12 +8,8 @@ export default function Navbar () {
             <div>
             <NavLink to="/home"><Logo/></NavLink>
             </div>
-
-         
-          
-
             <div className="flex ">
-            <NavLink className="px-5 py-1 secondary-color rounded-sm font-bold" to="/login">Giriş Yap!</NavLink>
+            <NavLink className="px-4 py-1 secondary-color rounded-sm font-bold" to="/login">Giriş Yap!</NavLink>
             </div>
             </div>
     
