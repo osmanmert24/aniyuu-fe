@@ -1,69 +1,101 @@
 import { useState } from "react";
 import { useAuth } from "./hooks/useAuth";
-import { Logo } from "./components/Logo";
+import { Link } from "react-router-dom";
 
 const Login = () => {
     const { login } = useAuth();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
-    
-    const handleSubmit = async e => {
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
             await login(email, password);
             window.location.href = '/';
-        } catch(err) {
-            setError(`Giriş başarısız: ${err.message || 'Bilinmeyen bir hata oluştu.'}`);
-            console.error(`Giriş başarısız: ${err.message || 'Bilinmeyen bir hata oluştu.'}`);
+        } catch (err) {
+            setError('Giriş başarısız: ' + (err.response?.data?.message || err.message));
         }
-    }
+    };
 
     return (
-        <div className="bg-[url(./assets/bg/background.png)] bg-black/75 bg-blend-multiply bg-cover bg-center  ">
-        <div className="flex flex-col items-center justify-center min-h-screen text-white"> 
-         
-            <div className="bg-black/50 px-16 flex flex-col items-center gap-5 py-36 rounded-lg   ">
-                <div className="relative -top-32">
-                <Logo/>
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-gray-900 to-black py-12 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-md w-full space-y-8 bg-black/40 p-8 rounded-xl backdrop-blur-sm border border-purple-500/10">
+                <div>
+                    <h2 className="mt-6 text-center text-3xl font-extrabold text-white">
+                        Giriş Yap
+                    </h2>
+                    <p className="mt-2 text-center text-sm text-gray-400">
+                        Anime dünyasına geri dön!
+                    </p>
                 </div>
-                <form onSubmit={handleSubmit} className="space-y-4 flex flex-col">
 
-                    <div className="flex gap-1 flex-col w-96">
-                        <label className="px-2 py-1" htmlFor="email">E-posta</label>
-                        <input 
-                            type="email"
-                            id="email" 
-                            placeholder="E-posta adresinizi girin"
-                            className="px-2 py-1"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
+                {error && (
+                    <div className="bg-red-500/10 border border-red-500/50 text-red-400 px-4 py-3 rounded relative" role="alert">
+                        <span className="block sm:inline">{error}</span>
                     </div>
-                    
-                    <div className="flex flex-col w-96 gap-1">
-                        <label className="px-2 py-1" htmlFor="password">Şifre</label>
-                        <input 
-                            type="password"  
-                            id="password" 
-                            placeholder="Şifrenizi girin" 
-                            className="px-2 py-1"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
+                )}
+
+                <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+                    <div className="rounded-md shadow-sm space-y-4">
+                        <div>
+                            <label htmlFor="email" className="sr-only">E-posta</label>
+                            <input
+                                id="email"
+                                type="email"
+                                required
+                                className="appearance-none relative block w-full px-3 py-3 border
+                                         border-gray-700 bg-black/40 text-gray-200 rounded-lg
+                                         focus:outline-none focus:ring-2 focus:ring-purple-500/40 
+                                         focus:border-purple-500 sm:text-sm"
+                                placeholder="E-posta"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                        </div>
+
+                        <div>
+                            <label htmlFor="password" className="sr-only">Şifre</label>
+                            <input
+                                id="password"
+                                type="password"
+                                required
+                                className="appearance-none relative block w-full px-3 py-3 border
+                                         border-gray-700 bg-black/40 text-gray-200 rounded-lg
+                                         focus:outline-none focus:ring-2 focus:ring-purple-500/40 
+                                         focus:border-purple-500 sm:text-sm"
+                                placeholder="Şifre"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                        </div>
                     </div>
 
-                    <button 
-                        type="submit"
-                        className="text-center text-md px-8 py-2 mx-auto  hover:opacity-50  mt-5 rounded-lg  secondary-color">
-                            Giriş yap!
-                    </button>
+                    <div>
+                        <button
+                            type="submit"
+                            className="group relative w-full flex justify-center py-3 px-4 border
+                                     border-transparent text-sm font-medium rounded-lg text-white
+                                     bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700
+                                     hover:to-pink-700 focus:outline-none focus:ring-2 
+                                     focus:ring-offset-2 focus:ring-purple-500 transition-all
+                                     duration-200 ease-in-out transform hover:scale-[1.02]"
+                        >
+                            Giriş Yap
+                        </button>
+                    </div>
                 </form>
+
+                <p className="mt-2 text-center text-sm text-gray-400">
+                    Hesabınız yok mu?{" "}
+                    <Link to="/register" className="text-purple-400 hover:underline">
+                        Kayıt olun
+                    </Link>
+                </p>
             </div>
         </div>
-        </div>
     );
-}
+};
 
 export default Login;
