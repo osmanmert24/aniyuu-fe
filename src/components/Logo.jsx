@@ -1,4 +1,4 @@
-export const Logo = (props) => (
+ export const Logo = (props) => (
   <svg
     className="size-32 logo-bg"
     xmlns="http://www.w3.org/2000/svg"
@@ -41,3 +41,4 @@ export const Logo = (props) => (
     </g>
   </svg>
 );
+
